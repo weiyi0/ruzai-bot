@@ -134,7 +134,7 @@ let app, server, rail, failure = null;
 try {
   const { certFile, ...tls } = trustThrowawayCertificate();
   server = await serve(tls);
-  const home = join(WORK, "home"), dataDir = join(home, ".openmausbot");
+  const home = join(WORK, "home"), dataDir = join(home, ".ruzai-bot");
   mkdirSync(dataDir, { recursive: true });
   const plan = join(WORK, "room-plan.json");
   writeFileSync(plan, "{}");

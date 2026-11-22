@@ -368,7 +368,7 @@ test("legacy data is moved before lease creation", () => {
   const root = mkdtempSync(path.join(tmpdir(), "omb-electron-legacy-"));
   roots.push(root);
   const legacyDataDir = path.join(root, ".opengrokbot");
-  const dataDir = path.join(root, ".openmausbot");
+  const dataDir = path.join(root, ".ruzai-bot");
   mkdirSync(legacyDataDir);
   writeFileSync(path.join(legacyDataDir, "keep-me.txt"), "kept");
 
@@ -591,7 +591,7 @@ test("iCloud Drive and File Provider folders count as synced, whatever their cas
   assert.equal(inMacSyncedFolder("/Users/someone/library/cloudstorage/Dropbox/omb", home), true);
   assert.equal(inMacSyncedFolder("/Users/someone/Library/CloudStorage", home), true);
   assert.equal(inMacSyncedFolder("/Users/someone/Library/CloudStorageOld/omb", home), false);
-  assert.equal(inMacSyncedFolder("/Users/someone/.openmausbot", home), false);
+  assert.equal(inMacSyncedFolder("/Users/someone/.ruzai-bot", home), false);
   assert.equal(inMacSyncedFolder("/Users/other/Library/CloudStorage/Dropbox", home), false);
 });
 

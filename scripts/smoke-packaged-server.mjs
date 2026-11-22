@@ -74,7 +74,7 @@ const fixtureEnv = {
   XDG_CONFIG_HOME: join(home, ".config"),
   XDG_CACHE_HOME: join(home, ".cache"),
   XDG_DATA_HOME: join(home, ".local", "share"),
-  OMB_DATA_DIR: join(home, ".openmausbot"),
+  OMB_DATA_DIR: join(home, ".ruzai-bot"),
   OMB_PORT: String(port),
   OMB_WEBHOOK_PORT: String(webhookPort),
   // Not a genuine key: enough to make the server look for its enterprise layer.
@@ -291,7 +291,7 @@ if (listening) {
   const [servicePort, serviceWebhookPort] = await freePorts(2);
   const service = spawn(process.execPath, [join(staging, "server", "index.js")], {
     cwd: staging,
-    env: { ...fixtureEnv, HOME: serviceHome, USERPROFILE: serviceHome, OMB_DATA_DIR: join(serviceHome, ".openmausbot"),
+    env: { ...fixtureEnv, HOME: serviceHome, USERPROFILE: serviceHome, OMB_DATA_DIR: join(serviceHome, ".ruzai-bot"),
       OMB_PORT: String(servicePort), OMB_WEBHOOK_PORT: String(serviceWebhookPort), OMB_LOOPBACK_TRUST: "service" },
     stdio: ["ignore", "pipe", "pipe"],
   });
@@ -340,7 +340,7 @@ if (listening && process.platform !== "win32") {
   const [launcherPort, launcherWebhookPort] = await freePorts(2);
   const launcher = spawn(process.execPath, [join(staging, "server", "server-launcher.js")], {
     cwd: staging,
-    env: { ...fixtureEnv, HOME: launcherHome, USERPROFILE: launcherHome, OMB_DATA_DIR: join(launcherHome, ".openmausbot"), OMB_PORT: String(launcherPort), OMB_WEBHOOK_PORT: String(launcherWebhookPort) },
+    env: { ...fixtureEnv, HOME: launcherHome, USERPROFILE: launcherHome, OMB_DATA_DIR: join(launcherHome, ".ruzai-bot"), OMB_PORT: String(launcherPort), OMB_WEBHOOK_PORT: String(launcherWebhookPort) },
     stdio: ["ignore", "pipe", "pipe"],
   });
   let launcherOutput = "";
@@ -358,7 +358,7 @@ if (listening && process.platform !== "win32") {
       if (serverPid === null) await new Promise((resolve) => setTimeout(resolve, 300));
     }
     // The bootstrap writes the cache about 10 s after the server starts.
-    const launcherCache = join(launcherHome, ".openmausbot", "cache", "node-compile");
+    const launcherCache = join(launcherHome, ".ruzai-bot", "cache", "node-compile");
     let cached = false;
     for (const written = Date.now() + 30_000; serverPid !== null && !cached && Date.now() < written && launcher.exitCode === null;) {
       try { cached = readdirSync(launcherCache).some((name) => /^v\d+\.\d+\.\d+-/.test(name)); } catch { /* not yet */ }
@@ -398,7 +398,7 @@ if (listening) {
       const [entryPort, entryWebhookPort] = await freePorts(2);
       const entry = spawn(process.execPath, [join(staging, "server", "desktop-entry.mjs")], {
         cwd: staging,
-        env: { ...fixtureEnv, HOME: entryHome, USERPROFILE: entryHome, OMB_DATA_DIR: join(entryHome, ".openmausbot"),
+        env: { ...fixtureEnv, HOME: entryHome, USERPROFILE: entryHome, OMB_DATA_DIR: join(entryHome, ".ruzai-bot"),
           OMB_PORT: String(entryPort), OMB_WEBHOOK_PORT: String(entryWebhookPort), OMB_SERVER_COMPILE_CACHE: cacheDir },
         stdio: ["ignore", "pipe", "pipe"],
       });

@@ -61,7 +61,7 @@ export async function launchOwnHomeFixture({ env = {} }: { env?: NodeJS.ProcessE
 
   async function start(name: string, own: NodeJS.ProcessEnv, port: number, extra: string[] = [], ipc = false): Promise<ChildProcess> {
     const home = join(root, name);
-    const dataDir = join(home, ".openmausbot");
+    const dataDir = join(home, ".ruzai-bot");
     mkdirSync(dataDir, { recursive: true });
     const cli = join(home, "fixture-claude.mjs");
     writeFileSync(cli, `#!/usr/bin/env node
@@ -145,7 +145,7 @@ await import(${JSON.stringify(pathToFileURL(join(SERVER_DIR, "testing", "fake-cl
         ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
       return { status: response.status, body: parse(await response.text()) };
     };
-    const server: OwnServer = { name, base, dataDir: join(root, `server-${servers.length + 1}`, ".openmausbot"), token, as,
+    const server: OwnServer = { name, base, dataDir: join(root, `server-${servers.length + 1}`, ".ruzai-bot"), token, as,
       place: { id: `place-${servers.length + 1}`, kind: "remote", name, origin: base } };
     servers.push(server);
     return server;
@@ -181,7 +181,7 @@ await import(${JSON.stringify(pathToFileURL(join(SERVER_DIR, "testing", "fake-cl
   listen();
 
   return {
-    root, desktopBase, desktopDataDir: join(root, "desktop", ".openmausbot"), ownerCapability: capability, local, addServer, journalFile, spies, windowFetch, logs: () => logs,
+    root, desktopBase, desktopDataDir: join(root, "desktop", ".ruzai-bot"), ownerCapability: capability, local, addServer, journalFile, spies, windowFetch, logs: () => logs,
     get main() { return main; },
     get beforeJournalWrite() { return fixture.beforeJournalWrite; },
     set beforeJournalWrite(hook) { fixture.beforeJournalWrite = hook; },

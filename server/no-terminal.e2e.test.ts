@@ -61,7 +61,7 @@ async function adminPairing(): Promise<string> {
 
 beforeAll(async () => {
   home = mkdtempSync(join(tmpdir(), "omb-no-terminal-"));
-  const dataDir = join(home, ".openmausbot");
+  const dataDir = join(home, ".ruzai-bot");
   mkdirSync(dataDir, { recursive: true });
   claudeDump = join(home, "claude-turn.json");
   upstream = createServer(async (req, res) => {

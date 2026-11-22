@@ -58,7 +58,7 @@ async function adminPairing(): Promise<string> {
 async function leftBehind(of: { threadIds?: string[]; routineIds?: string[] }) {
   for (const proxy of proxies.splice(0)) proxy.kill();
   await waitForExit(child, { signal: "SIGTERM" });
-  markLeftBehind(join(home, ".openmausbot"), of);
+  markLeftBehind(join(home, ".ruzai-bot"), of);
   await boot();
 }
 
@@ -120,7 +120,7 @@ function lend(env: { id: string; name: string; origin: string }, desktop: Pick<P
 
 beforeAll(async () => {
   home = mkdtempSync(join(tmpdir(), "omb-cloud-lending-"));
-  const dataDir = join(home, ".openmausbot");
+  const dataDir = join(home, ".ruzai-bot");
   mkdirSync(dataDir, { recursive: true });
   mkdirSync(turnDumps());
   const cli = join(home, "fixture-claude.mjs");
@@ -153,7 +153,7 @@ await import(${JSON.stringify(pathToFileURL(join(SERVER_DIR, "testing", "fake-cl
 
 let port = 0;
 async function boot() {
-  const dataDir = join(home, ".openmausbot");
+  const dataDir = join(home, ".ruzai-bot");
   const offlinePrelude = `data:text/javascript,${encodeURIComponent('const real = globalThis.fetch; globalThis.fetch = async (url, init) => String(url).startsWith("http://127.0.0.1:") ? real(url, init) : new Response("offline fixture", { status: 503 });')}`;
   // The memory gate's seam (testing/memory-gate-hooks.mjs): this machine's memory is host-memory.json's, on every OS.
   const memoryGate = pathToFileURL(join(SERVER_DIR, "testing", "memory-gate-hooks.mjs")).href;
@@ -471,7 +471,7 @@ it("on a Cloud home the owner's answer to an options card is recorded as the own
   const made = (await api("POST", "/api/bots", { token: owner, body: { name: "Watcher", modelSelection: { instanceId: "claude", model: "claude-sonnet-5" } } })).body.bot;
   for (const proxy of proxies.splice(0)) proxy.kill();
   await waitForExit(child, { signal: "SIGTERM" });
-  const botsFile = join(home, ".openmausbot", "bots.json");
+  const botsFile = join(home, ".ruzai-bot", "bots.json");
   writeFileSync(botsFile, readFileSync(botsFile, "utf8").replaceAll(made.id, WATCHER_OPTIONS_CARD_BOT_ID));
   await boot();
   const agents = await agentsFor(async () => {
@@ -654,7 +654,7 @@ it("a routine the bot changes in the owner's own chat keeps the lent computer on
   await connector.saveCloud(env, { folders: [{ id: randomUUID(), name: "Plans", path: folderPath, write: false }], screen: false });
   await expect.poll(() => connector!.cloudState(env).connected, { timeout: 8000 }).toBe(true);
   const [computer] = (await api("GET", "/api/shared-computers", { token: owner })).body.computers;
-  const authors = () => JSON.parse(readFileSync(join(home, ".openmausbot", "lending-routines.json"), "utf8"));
+  const authors = () => JSON.parse(readFileSync(join(home, ".ruzai-bot", "lending-routines.json"), "utf8"));
   const lent = (listing: any) => JSON.parse(listing.content[0].text);
   const applied = (result: unknown) => { const text = JSON.stringify(result); expect(text).not.toContain("isError\":true"); return text; };
   const made = (result: unknown) => /trigger id ([\w-]+)/u.exec(applied(result))?.[1] ?? "";

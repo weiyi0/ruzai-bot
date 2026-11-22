@@ -289,11 +289,11 @@ describe("encrypted full workspace backups", () => {
   // A Windows PC moves to a Linux Cloud; restored on Windows, its paths are this computer's own and are kept.
   it.skipIf(process.platform === "win32")("brings a Windows computer's data folder over wherever it is written, and clears and lists the folders and files left on that PC", async () => {
     const source = directory();
-    const windows = "C:\\Users\\Ada\\.openmausbot", site = "C:\\Users\\Ada\\Projects\\site";
+    const windows = "C:\\Users\\Ada\\.ruzai-bot", site = "C:\\Users\\Ada\\Projects\\site";
     const soul = `Read ${windows}\\files\\brief.md before you start.`;
     json(join(source, "bots.json"), [
       { id: "bot", threadId: "thread", cwd: site, soul, tasks: [
-        { threadId: "thread", cwd: "c:\\users\\ada\\.openmausbot\\task-workspaces\\bot\\thread", resumeCursors: { claude: "kept" } },
+        { threadId: "thread", cwd: "c:\\users\\ada\\.ruzai-bot\\task-workspaces\\bot\\thread", resumeCursors: { claude: "kept" } },
         { threadId: "other", cwd: site, resumeCursors: { claude: "only-on-that-pc" } },
       ] },
       { id: "helper", threadId: "helper-thread", soul: "No paths here.", tasks: [{ threadId: "helper-thread", cwd: null }] },
@@ -303,7 +303,7 @@ describe("encrypted full workspace backups", () => {
     json(join(source, "routines.json"), { version: 1, routines: [{ id: "routine", botId: "bot", enabled: true, prompt }], runs: [] });
     mkdirSync(join(source, "workspaces", "bot", "memory"), { recursive: true });
     writeFileSync(join(source, "workspaces", "bot", "MEMORY.md"),
-      "- The brief: c:\\users\\ada\\.openmausbot\\files\\brief.md\n- Drafts go to C:/Users/Ada/.openmausbot/files/drafts/\n- C:\\Users\\Ada\\.openmausbot-old\\notes.md is an old copy\n");
+      "- The brief: c:\\users\\ada\\.ruzai-bot\\files\\brief.md\n- Drafts go to C:/Users/Ada/.ruzai-bot/files/drafts/\n- C:\\Users\\Ada\\.openmausbot-old\\notes.md is an old copy\n");
     writeFileSync(join(source, "workspaces", "bot", "memory", "people.md"), "Ada prefers short replies.\n");
     mkdirSync(join(source, "bots", "bot"), { recursive: true });
     writeFileSync(join(source, "bots", "bot", "SOUL.md"), soul);

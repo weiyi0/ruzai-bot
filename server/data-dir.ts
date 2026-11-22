@@ -38,7 +38,7 @@ function accountHome(): string | null {
 }
 
 /**
- * The data folder: OMB_DATA_DIR, else `.openmausbot` under the home.
+ * The data folder: OMB_DATA_DIR, else `.ruzai-bot` under the home.
  * Security: a test or benchmark run (testRunSignal) with no OMB_DATA_DIR never gets the person's own data folder. It
  * throws instead, since the folder is fixed when server/config.ts is first imported and a later assignment is ignored.
  */
@@ -49,8 +49,8 @@ export function defaultDataDir(env: Env = process.env, under: () => string = dat
   if (signal) {
     const real = realHome();
     if (real && canonical(base) === canonical(real)) {
-      throw new Error(`${signal} marks this as a test or benchmark run, and OMB_DATA_DIR is not set: refusing to use the real data folder ${join(base, ".openmausbot")}. Set OMB_DATA_DIR to a temp folder in the environment before the process starts; setting it inside the script is too late.`);
+      throw new Error(`${signal} marks this as a test or benchmark run, and OMB_DATA_DIR is not set: refusing to use the real data folder ${join(base, ".ruzai-bot")}. Set OMB_DATA_DIR to a temp folder in the environment before the process starts; setting it inside the script is too late.`);
     }
   }
-  return join(base, ".openmausbot");
+  return join(base, ".ruzai-bot");
 }

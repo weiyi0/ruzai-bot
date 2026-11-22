@@ -23,7 +23,7 @@ describe("the lock-down policy of a Chrome on a private display", () => {
   });
 
   it("lets through only the folders named, and nothing beside them", () => {
-    expect(desktopPolicy(["/data/.openmausbot/workspaces/scout/", "/srv/files"]).URLAllowlist).toEqual(expect.arrayContaining(["file:///data/.openmausbot/workspaces/scout/", "file:///srv/files/"]));
+    expect(desktopPolicy(["/data/.ruzai-bot/workspaces/scout/", "/srv/files"]).URLAllowlist).toEqual(expect.arrayContaining(["file:///data/.ruzai-bot/workspaces/scout/", "file:///srv/files/"]));
   });
 
   it("is put in force for that Chrome alone, in every installed brand's folder of a private mount namespace", () => {
