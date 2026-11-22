@@ -20,7 +20,7 @@ const manifest = (name: string) => ({ format: "openmaus.team", version: 2, team:
 
 class Cloud {
   home = mkdtempSync(join(tmpdir(), "omb-starter-bots-"));
-  dataDir = join(this.home, ".openmausbot");
+  dataDir = join(this.home, ".ruzai-bot");
   gate = join(this.home, "finish");
   dump = join(this.home, "claude.json");
   secret = randomBytes(32).toString("base64url");

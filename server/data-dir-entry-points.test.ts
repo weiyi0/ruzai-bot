@@ -31,16 +31,16 @@ const dirOfCache = (env: Env) => resolve(env.OMB_SERVER_COMPILE_CACHE!, "..", ".
 
 describe.each(ENTRY_POINTS)("%s's data folder", (_name, resolvedAs, flagged) => {
   const resolved = (env: Env, home: string) => resolve(resolvedAs(env, home));
-  it("is .openmausbot under the home in a normal run, and OMB_DATA_DIR (a desktop profile's folder) as given", () => {
-    expect(resolved({}, REAL)).toBe(resolve(REAL, ".openmausbot"));
-    expect(resolved({ NODE_ENV: "production" }, REAL)).toBe(resolve(REAL, ".openmausbot"));
+  it("is .ruzai-bot under the home in a normal run, and OMB_DATA_DIR (a desktop profile's folder) as given", () => {
+    expect(resolved({}, REAL)).toBe(resolve(REAL, ".ruzai-bot"));
+    expect(resolved({ NODE_ENV: "production" }, REAL)).toBe(resolve(REAL, ".ruzai-bot"));
     expect(resolved({ OMB_DATA_DIR: PROFILE }, REAL)).toBe(resolve(PROFILE));
   });
 
   it.each([{ VITEST: "true" }, { NODE_ENV: "test" }, { OMB_BENCH: "1" }])("refuses the real home's folder in a test or benchmark run: %o", (env) => {
     expect(() => resolved(env, REAL)).toThrow(/OMB_DATA_DIR is not set.*refusing to use the real data folder/);
     expect(resolved({ ...env, OMB_DATA_DIR: PROFILE }, REAL)).toBe(resolve(PROFILE));
-    expect(resolved(env, ELSEWHERE)).toBe(resolve(ELSEWHERE, ".openmausbot"));
+    expect(resolved(env, ELSEWHERE)).toBe(resolve(ELSEWHERE, ".ruzai-bot"));
   });
 
   it.skipIf(!flagged)("takes --data-dir in a test run without looking at the home", () => {

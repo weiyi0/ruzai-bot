@@ -91,7 +91,7 @@ already have:
   — your existing logins and subscriptions, no new accounts, no proxy in the middle. Point any engine at a
   custom CLI binary (a versioned build or wrapper) in **Settings → Engines**.
 - **Local first.** One small harness server on `127.0.0.1` owns every agent process. Transcripts, keys, and
-  events live in `~/.openmausbot`, not a cloud.
+  events live in `~/.ruzai-bot`, not a cloud.
 - **Agents with hands.** Each bot can use a cloud Linux desktop, an isolated Local VM, or—where the platform
   safety boundary is currently certified—your own computer, plus 500+ apps through Composio. Host control is
   available on macOS and Ubuntu Xorg after explicit opt-in. Ubuntu Wayland host control remains disabled while
@@ -108,7 +108,7 @@ apps, running on your machine under Apache 2.0. If you searched for an *open Mus
 | Looking for | What it is | How OpenMausBot differs | Read more |
 | --- | --- | --- | --- |
 | **Open source Grok Bot** | xAI's roster of bots on one shared cloud computer, Grok only, from a SuperGrok or Cursor plan | Same roster shape; any model per bot; your own machine; approval cards | [Grok Bot vs OpenMausBot](https://www.openmausbot.com/blog/grok-bot-vs-openmausbot) |
-| **Open Muse** | Meta's single personal agent in a Meta cloud VM, US and Canada only | A team instead of one agent; runs anywhere; data in `~/.openmausbot` | [Meta Muse alternative](https://www.openmausbot.com/blog/open-source-alternative-to-meta-muse) |
+| **Open Muse** | Meta's single personal agent in a Meta cloud VM, US and Canada only | A team instead of one agent; runs anywhere; data in `~/.ruzai-bot` | [Meta Muse alternative](https://www.openmausbot.com/blog/open-source-alternative-to-meta-muse) |
 | **Open dots** | OpenAI's always-on agent inside ChatGPT, GPT only, Pro and Business Premium plans | Several agents; your Claude, ChatGPT or Grok login; no plan required | [OpenAI dots alternative](https://www.openmausbot.com/blog/openai-dots-alternative) |
 | **Open Cue** | Manus's invite-only agents with their own phone, email and wallet | No invite; OAuth instead of passwords; open source | [Cue by Manus alternative](https://www.openmausbot.com/blog/open-source-alternative-to-cue-by-manus) |
 | **Open Instinct** | Spear Street's invite-only agent that holds your passwords on a cloud computer | Ask for approval when you want it; signs in over OAuth; your machine | [Instinct AI alternative](https://www.openmausbot.com/blog/instinct-ai-alternative) |
@@ -351,15 +351,16 @@ See the [Ubuntu Desktop guide](docs/linux-desktop.md) for installation, capabili
 Any desktop build can also open the bots of another Windows, macOS, or Ubuntu computer over Tailscale; see [open one computer's bots from another computer](docs/desktop-companion.md).
 
 
-**From source:**
+**This fork (ruzai-bot):** develop from this checkout. It keeps the OpenMausBot UI and engines, stores its own data in `~/.ruzai-bot` (or `OMB_DATA_DIR`), and does not read `~/.openmausbot` or publish to the upstream release feed. Upstream project: [milind-soni/OpenMausBot](https://github.com/milind-soni/OpenMausBot).
 
 ```sh
-git clone https://github.com/milind-soni/OpenMausBot && cd OpenMausBot
+git clone https://github.com/weiyi0/ruzai-bot && cd ruzai-bot
 pnpm install
 
 pnpm dev:server    # harness server → 127.0.0.1:8799
 pnpm dev           # app → http://127.0.0.1:5199
-pnpm dev:desktop   # Electron shell; keep the two commands above running
+pnpm ruzai-bot     # same server entry as pnpm omb
+pnpm dev:desktop   # Electron shell; keep the server and app running
 ```
 
 Requirements: **macOS, Windows, or Ubuntu 24.04 x64**, **Node 24+**, **pnpm**, and at least one agent CLI — [`claude`](https://claude.com/claude-code),

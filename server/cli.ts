@@ -1,8 +1,8 @@
 // `openmausbot` on the command line: run the server anywhere and pair devices to it.
 //
-//   openmausbot setup [--data-dir ~/.openmausbot]
+//   openmausbot setup [--data-dir ~/.ruzai-bot]
 //   openmausbot start [serve options]
-//   openmausbot serve [--port 8799] [--data-dir ~/.openmausbot] [--label "cab mini"]
+//   openmausbot serve [--port 8799] [--data-dir ~/.ruzai-bot] [--label "cab mini"]
 //                     [--public-url https://host] [--tailscale | --tunnel | --domain HOST] [--relay] [--no-pair]
 //   openmausbot pair  [--label "My MacBook"] [--client] [--public-url https://host]
 //   openmausbot sessions [revoke <id>]
@@ -958,7 +958,7 @@ export async function runOnboardingCommand(
     }
     if (options.command === "setup") {
       io.log(`\nAll set. Start with: ${cliPrefix()}`);
-      if (options.dataDir !== join(homedir(), ".openmausbot") || options.port !== 8799) {
+      if (options.dataDir !== join(homedir(), ".ruzai-bot") || options.port !== 8799) {
         io.log(`Use the same --data-dir (${options.dataDir}) and --port (${options.port}) options when starting.`);
       }
       return 0;

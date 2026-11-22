@@ -1,4 +1,4 @@
-// Anything touching the new dir before ensureDirs() runs would make the ~/.opengrokbot rename a no-op: this pins the order.
+// This fork must not rename or read an existing OpenMausBot or OpenGrokBot folder.
 import { spawn, type ChildProcess } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -21,12 +21,14 @@ let stderr = "";
 beforeAll(async () => {
   home = mkdtempSync(join(tmpdir(), "omb-legacy-test-"));
   const legacy = join(home, ".opengrokbot");
+  const previous = join(home, ".openmausbot");
   mkdirSync(legacy, { recursive: true });
-  // A non-product shadow: an empty map would select the full default fleet, whose CLI probes are not part of this test.
+  mkdirSync(previous, { recursive: true });
   writeFileSync(join(legacy, "config.json"), JSON.stringify({
     instances: { fixture: { driver: "migration-test-shadow" } },
   }));
   writeFileSync(join(legacy, "keep-me.txt"), "carried over");
+  writeFileSync(join(previous, "keep-me.txt"), "openmausbot");
   child = spawn(process.execPath, [join(SERVER_DIR, "index.ts")], {
     cwd: ROOT,
     env: {
@@ -59,10 +61,11 @@ afterAll(async () => {
 });
 
 describe("legacy data dir", () => {
-  it("is renamed to the new name on first boot, with its contents and a fresh environment id", () => {
-    const fresh = join(home, ".openmausbot");
-    expect(existsSync(join(home, ".opengrokbot"))).toBe(false);
-    expect(readFileSync(join(fresh, "keep-me.txt"), "utf8")).toBe("carried over");
+  it("starts in .ruzai-bot and leaves OpenGrokBot and OpenMausBot folders untouched", () => {
+    const fresh = join(home, ".ruzai-bot");
+    expect(readFileSync(join(home, ".opengrokbot", "keep-me.txt"), "utf8")).toBe("carried over");
+    expect(readFileSync(join(home, ".openmausbot", "keep-me.txt"), "utf8")).toBe("openmausbot");
+    expect(existsSync(join(fresh, "keep-me.txt"))).toBe(false);
     expect(readFileSync(join(fresh, "environment-id"), "utf8").trim()).toMatch(/^[0-9a-f-]{36}$/);
   });
 });

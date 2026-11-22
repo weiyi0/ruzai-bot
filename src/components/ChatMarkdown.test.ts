@@ -808,14 +808,14 @@ describe("ChatMarkdown attachments", () => {
     const preview = vi.spyOn(AttachmentPreview, "MarkdownImagePreview");
     try {
       const html = renderToStaticMarkup(createElement(ChatMarkdown, {
-        text: "[Report](C:\\Users\\Maus\\.openmausbot\\report.md)\n\n![Chart](C:\\Users\\Maus\\.openmausbot\\chart.png)",
+        text: "[Report](C:\\Users\\Maus\\.ruzai-bot\\report.md)\n\n![Chart](C:\\Users\\Maus\\.ruzai-bot\\chart.png)",
         message: { threadId: "thread-1", messageId: "message-1" },
       }));
       expect(html).toContain('title="Preview: report.md"');
       expect(html).not.toContain('href=""');
       expect(html).not.toContain("Image unavailable");
-      expect(save.mock.calls[0]?.[0]).toBe("C:\\Users\\Maus\\.openmausbot\\report.md");
-      expect(preview.mock.calls[0]?.[0].filePath).toBe("C:\\Users\\Maus\\.openmausbot\\chart.png");
+      expect(save.mock.calls[0]?.[0]).toBe("C:\\Users\\Maus\\.ruzai-bot\\report.md");
+      expect(preview.mock.calls[0]?.[0].filePath).toBe("C:\\Users\\Maus\\.ruzai-bot\\chart.png");
     } finally {
       save.mockRestore();
       preview.mockRestore();
@@ -865,7 +865,7 @@ describe("ChatMarkdown attachments", () => {
     const cases: Array<[string, string]> = [
       ["I saved the report to /Users/maus/reports/q3.md, have a look.", "/Users/maus/reports/q3.md"],
       ["It's in `/Users/maus/My Reports/q3 final.md`.", "/Users/maus/My Reports/q3 final.md"],
-      [String.raw`Written to C:\Users\Maus\.openmausbot\report.md.`, String.raw`C:\Users\Maus\.openmausbot\report.md`],
+      [String.raw`Written to C:\Users\Maus\.ruzai-bot\report.md.`, String.raw`C:\Users\Maus\.ruzai-bot\report.md`],
       [String.raw`It's on \\fileserver\team\plans\roadmap.docx now.`, String.raw`\\fileserver\team\plans\roadmap.docx`],
       [String.raw`Saved /tmp/out/my\_notes.md`, "/tmp/out/my_notes.md"],
     ];

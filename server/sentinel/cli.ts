@@ -24,8 +24,8 @@ openmausbot sentinel --check-install [--json]
 Scans an OpenMausBot data dir, read-only, for failed tool calls, stopped or
 timed-out turns, long queue waits, expensive turns and retry loops, and keeps
 them as issues in issues.jsonl, outside the data dir: on macOS in
-~/Library/Application Support/openmausbot-sentinel, on Linux in
-$XDG_STATE_HOME/openmausbot-sentinel (~/.local/state/…), or in --out. Issues
+~/Library/Application Support/ruzai-bot-sentinel, on Linux in
+$XDG_STATE_HOME/ruzai-bot-sentinel (~/.local/state/…), or in --out. Issues
 point at the evidence by id and carry a normalized one-line title; they never
 copy tool output or message text.
 

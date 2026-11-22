@@ -17,7 +17,7 @@ const detection = detectBox({ env: ENV });
 
 describe.skipIf(detection.box !== "bwrap")(`an upload added after a box in its bot's own folder started (${detection.box === "bwrap" ? "bubblewrap works here" : `skipped: ${detection.reason}`})`, () => {
   const root = mkdtempSync(join(tmpdir(), "omb-retained-upload-"));
-  const home = join(root, "home"), dataDir = join(home, ".openmausbot"), uploads = join(dataDir, "attachments");
+  const home = join(root, "home"), dataDir = join(home, ".ruzai-bot"), uploads = join(dataDir, "attachments");
   const own = join(dataDir, "workspaces", "bot-a"), conversationFolder = join(dataDir, "task-workspaces", "bot-a", "room-1");
   const box = new BotBox();
   beforeAll(async () => {

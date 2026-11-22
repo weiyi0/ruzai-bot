@@ -230,7 +230,7 @@ test("version 2 keeps locals with an absolute dataDir and drops relative, dir-le
 });
 
 test("withLocalEnvironment registers absolute, non-default, non-nested directories only", () => {
-  const DEFAULT = "/Users/me/.openmausbot";
+  const DEFAULT = "/Users/me/.ruzai-bot";
   const added = env.withLocalEnvironment({ environments: [], activeId: "local" }, { name: "APRS Chat", dataDir: "/Users/me/.openmausbot-aprs" }, () => "id1", DEFAULT);
   assert.equal(added.ok, true);
   assert.deepEqual(added.state.environments, [{ id: "id1", kind: "local", name: "APRS Chat", dataDir: "/Users/me/.openmausbot-aprs" }]);
@@ -248,7 +248,7 @@ test("withLocalEnvironment registers absolute, non-default, non-nested directori
 });
 
 test("activeLocalDataDir reports only an active local environment's directory", () => {
-  const DEFAULT = "/Users/me/.openmausbot";
+  const DEFAULT = "/Users/me/.ruzai-bot";
   const state = {
     environments: [
       { id: "l1", kind: "local", name: "APRS", dataDir: "/Users/me/.openmausbot-aprs" },
@@ -262,7 +262,7 @@ test("activeLocalDataDir reports only an active local environment's directory", 
 });
 
 test("startupEnvironmentDir boots on the active local dir and falls back to the default", () => {
-  const DEFAULT = "/Users/me/.openmausbot";
+  const DEFAULT = "/Users/me/.ruzai-bot";
   const state = {
     environments: [
       { id: "l1", kind: "local", name: "APRS", dataDir: "/Users/me/.openmausbot-aprs" },
@@ -276,7 +276,7 @@ test("startupEnvironmentDir boots on the active local dir and falls back to the 
 });
 
 test("bootEnvironmentDir refuses to boot onto a missing named env dir — the default dir instead, flagged", () => {
-  const DEFAULT = "/Users/me/.openmausbot";
+  const DEFAULT = "/Users/me/.ruzai-bot";
   const gone = { environments: [{ id: "l1", kind: "local", name: "APRS", dataDir: "/Volumes/gone/.openmausbot-aprs", missing: true }], activeId: "l1" };
   assert.deepEqual(env.bootEnvironmentDir(gone, DEFAULT), { dataDir: DEFAULT, fellBack: true, missingDir: "/Volumes/gone/.openmausbot-aprs" });
   const present = { environments: [{ ...gone.environments[0], missing: false }], activeId: "l1" };
@@ -301,7 +301,7 @@ test("data dirs are absolute in POSIX, drive-letter and UNC shape; relative and 
 });
 
 test("withLocalEnvironment rejects a candidate that contains a registered local dir, accepts siblings", () => {
-  const DEFAULT = "/Users/me/.openmausbot";
+  const DEFAULT = "/Users/me/.ruzai-bot";
   const added = env.withLocalEnvironment({ environments: [], activeId: "local" }, { name: "APRS", dataDir: "/Users/me/bots/aprs" }, () => "id1", DEFAULT);
   assert.equal(added.ok, true);
   const error = (dataDir) => env.withLocalEnvironment(added.state, { name: "x", dataDir }, () => "unused", DEFAULT).error;
@@ -336,14 +336,14 @@ test("a named local environment is this computer with its path, and gets its own
 
 
 test("withLocalEnvironment compares Windows-shaped paths by separators and case", () => {
-  const winDefault = "C:\\Users\\me\\.openmausbot";
+  const winDefault = "C:\\Users\\me\\.ruzai-bot";
   const state = env.withLocalEnvironment({ environments: [], activeId: "local" }, { name: "Site", dataDir: "C:\\Bots\\Site" }, () => "site", winDefault);
   assert.equal(state.ok, true);
   const again = (name, dataDir) => env.withLocalEnvironment(state.state, { name, dataDir }, () => "x", winDefault).error;
   assert.equal(again("Copy", "c:/bots/site/"), "duplicate");
   assert.equal(again("Child", "C:\\Bots\\Site\\sub"), "nested");
   assert.equal(again("Child2", "C:/BOTS/SITE/sub"), "nested");
-  assert.equal(again("Inside default", "c:\\users\\me\\.openmausbot\\envs\\x"), "nested");
+  assert.equal(again("Inside default", "c:\\users\\me\\.ruzai-bot\\envs\\x"), "nested");
   const unc = env.withLocalEnvironment({ environments: [], activeId: "local" }, { name: "Share", dataDir: "\\\\NAS\\omb" }, () => "share", "\\\\nas\\other");
   assert.equal(unc.ok, true);
   assert.equal(env.withLocalEnvironment(unc.state, { name: "Under", dataDir: "\\\\NAS\\omb\\deep" }, () => "x", "\\\\NAS\\elsewhere").error, "nested");
